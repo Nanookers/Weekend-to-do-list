@@ -3,6 +3,7 @@ $(document).ready( function(){
     renderChoreList()
     $('#submitButton').on('click', addChores)
     $('body').on('click','.deleteButton', deleteChore)
+    $('body').on('click', '.completeButton', updateChoreStatus)
 });
 
 //Render Function.
@@ -65,4 +66,22 @@ function deleteChore(){
     }).catch((error) =>{
         console.log('something broke in the DELETE', error);
     })
-}//end delete
+}
+
+// Update Function
+function updateChoreStatus(){
+    let updateThisChore = $(this).data().id;
+    console.log(updateThisChore);
+
+    $.ajax({
+        method: 'PUT',
+        url: `/toDO/${updateThisChore}`,
+        data: {
+            complete: 'true'
+        }
+    }).then((response) => {
+        renderChoreList()
+    }).catch((error) => {
+        console.log('it broke, the PUT that is', error);
+    })
+}

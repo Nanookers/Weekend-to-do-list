@@ -39,6 +39,7 @@ router.post('/', ( req, res ) => {
     });
 })
 
+//Delete Works
 router.delete('/:id', (req, res) => {
     let idToDelete = req.params.id
 
