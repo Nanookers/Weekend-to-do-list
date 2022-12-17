@@ -1,4 +1,4 @@
-const pg = require('pg)');
+const pg = require('pg');
 // Connects us to the database
 
 const Pool = pg.Pool;
@@ -17,6 +17,6 @@ pool.on('connect', () => {
 
 pool.on('error', (error) => {
     console.log('Error with postgres pool', error)
-  });
+});
 
   module.exports = pool;
