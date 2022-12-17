@@ -39,7 +39,7 @@ function addChores() {
     let newChore = {
         task,
         notes,
-        complete: 'false'
+        complete: false
     }
     console.log(newChore);
     $.ajax({
@@ -75,9 +75,9 @@ function updateChoreStatus(){
 
     $.ajax({
         method: 'PUT',
-        url: `/toDO/${updateThisChore}`,
+        url: `/toDo/:${updateThisChore}`,
         data: {
-            complete: 'true'
+            complete: true
         }
     }).then((response) => {
         renderChoreList()

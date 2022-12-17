@@ -59,4 +59,30 @@ router.delete('/:id', (req, res) => {
         res.sendStatus(500);
     })
 })
+//finish the put button next
+router.put('/:id', (res, req) => {
+    let idToUpdate = req.params.id
+    console.log(idToUpdate);
+    let choreFinished = req.body.complete
+    console.log(choreFinished);
+    
+    let sqlQuery = `
+        UPDATE "toDo"
+        SET "complete" = $1
+        WHERE "id" = $2;
+    `;
+
+    let sqlValues = [newTransfer, idToUpdate]
+    console.log(sqlValues);
+
+    pool.query(sqlQuery, sqlValues)
+    .then((dbRes)=>{
+        console.log('successful update from put: serverside');
+        res.sendStatus(201)
+    }).catch(( dbErr)=>{
+        console.log('broke in PUT serverside', dbErr);
+        res.sendStatus(500)
+    })
+})
+
 module.exports = router;
