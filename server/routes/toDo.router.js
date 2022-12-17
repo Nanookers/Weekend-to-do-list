@@ -38,4 +38,24 @@ router.post('/', ( req, res ) => {
         res.sendStatus(500);
     });
 })
+
+router.delete('/:id', (req, res) => {
+    let idToDelete = req.params.id
+
+    let sqlQuery = `
+        DELETE FROM "toDo"
+            WHERE "id" = $1;
+    `;
+
+    let sqlValues = [idToDelete]
+
+    pool.query(sqlQuery, sqlValues)
+    .then((dbRes) => {
+        console.log('SUCCESS DELETE: SERVERSIDE');
+        res.sendStatus(201)
+    }).catch((dbErr) => {
+        console.log('DELETE BROKE!');
+        res.sendStatus(500);
+    })
+})
 module.exports = router;
