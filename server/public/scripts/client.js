@@ -106,6 +106,6 @@ function updateChoreStatus(){
 
 function showItsComplete(){
     if( chore.complete === 'true'){
-        return  'class= "addCompletedTask"';
+        return  'class="addCompletedTask"';
     }
 }
