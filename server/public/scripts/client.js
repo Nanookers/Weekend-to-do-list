@@ -15,19 +15,36 @@ function renderChoreList(){
         $('#listedChores').empty();
         console.log(response);
         for ( let chore of response){
-            $('#listedChores').append(`
+            if (chore.complete === 'true'){
+                $('#listedChores').append(`
+                    <tr class="addCompletedTask">
+                        <td>${chore.task}</td>
+                        <td>${chore.notes}</td>
+                        <td >${chore.complete} </td>
+                        <td><button class="completeButton" data-id="${chore.id}">Complete</button>
+                        <td><button class="deleteButton" data-id="${chore.id}">Delete</button>
+                    </tr>
+                `)
+            } else{
+                $('#listedChores').append(`
                 <tr>
                     <td>${chore.task}</td>
                     <td>${chore.notes}</td>
-                    <td>${chore.complete}</td>
+                    <td >${chore.complete} </td>
                     <td><button class="completeButton" data-id="${chore.id}">Complete</button>
                     <td><button class="deleteButton" data-id="${chore.id}">Delete</button>
                 </tr>
             `)
+
+            } 
         }
     }).catch((error) => {
         console.log('GET BROKE', error);
     }) 
+
+    $('#addChore').val('');
+    $('#addNotes').val('');
+
 }   
 
 //POSTS and Inputs are succesful
@@ -39,7 +56,7 @@ function addChores() {
     let newChore = {
         task,
         notes,
-        complete: false
+        complete: 'false'
     }
     console.log(newChore);
     $.ajax({
@@ -75,13 +92,20 @@ function updateChoreStatus(){
 
     $.ajax({
         method: 'PUT',
-        url: `/toDo/:${updateThisChore}`,
+        url: `/toDo/${updateThisChore}`,
         data: {
-            complete: true
+            complete: 'true'
         }
     }).then((response) => {
-        renderChoreList()
+        renderChoreList(); 
     }).catch((error) => {
-        console.log('it broke, the PUT that is', error);
+        console.log('something broke in PUT', error);
     })
+
+}
+
+function showItsComplete(){
+    if( chore.complete === 'true'){
+        return  'class= "addCompletedTask"';
+    }
 }

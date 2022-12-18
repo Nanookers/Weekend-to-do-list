@@ -1,3 +1,4 @@
+const { application } = require('express');
 const express = require('express'); 
 const router = express.Router();
 
@@ -41,6 +42,7 @@ router.post('/', ( req, res ) => {
 
 //Delete Works
 router.delete('/:id', (req, res) => {
+    console.log(req.params);
     let idToDelete = req.params.id
 
     let sqlQuery = `
@@ -60,29 +62,29 @@ router.delete('/:id', (req, res) => {
     })
 })
 //finish the put button next
-router.put('/:id', (res, req) => {
-    let idToUpdate = req.params.id
-    console.log(idToUpdate);
-    let choreFinished = req.body.complete
-    console.log(choreFinished);
-    
-    let sqlQuery = `
-        UPDATE "toDo"
-        SET "complete" = $1
-        WHERE "id" = $2;
-    `;
+// had to include /toDO, or else it wouldn't got to address. 
+// router.put('/toDo/:id', (req, res) =>  {
+//     console.log(req.params);
+//     let idToUpdate = req.params.id
+//     console.log(req.body);
+//     let completeStatus = req.body.complete
 
-    let sqlValues = [newTransfer, idToUpdate]
-    console.log(sqlValues);
+//     let sqlQuery = `
+//         UPDATE "toDo"
+//             SET "complete" = $1
+//             WHERE "id" = $2;
+//     `;
 
-    pool.query(sqlQuery, sqlValues)
-    .then((dbRes)=>{
-        console.log('successful update from put: serverside');
-        res.sendStatus(201)
-    }).catch(( dbErr)=>{
-        console.log('broke in PUT serverside', dbErr);
-        res.sendStatus(500)
-    })
-})
+//     let sqlValues = [completeStatus, idToUpdate]
+//     console.log(sqlValues);
+//     pool.query(sqlQuery, sqlValues)
+//     .then((dbRes)=>{
+//         console.log('successful update from put: serverside');
+//         res.sendStatus(201)
+//     }).catch(( dbErr)=>{
+//         console.log('broke in PUT serverside', dbErr);
+//         res.sendStatus(500)
+//     })
+// })
 
 module.exports = router;
