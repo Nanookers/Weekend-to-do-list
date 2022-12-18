@@ -2,6 +2,8 @@
 $(document).ready( function(){
     renderChoreList()
     $('#submitButton').on('click', addChores)
+    $('#submitButton').on('click', showItsComplete)
+    $('body').on('click', '.closeButton', clearAlert )
     $('body').on('click','.deleteButton', deleteChore)
     $('body').on('click', '.completeButton', updateChoreStatus)
 });
@@ -15,22 +17,22 @@ function renderChoreList(){
         $('#listedChores').empty();
         console.log(response);
         for ( let chore of response){
-            if (chore.complete === 'true'){
+            if (chore.complete === 'yes'){
                 $('#listedChores').append(`
-                    <tr class="addCompletedTask">
-                        <td>${chore.task}</td>
-                        <td>${chore.notes}</td>
-                        <td >${chore.complete} </td>
+                    <tr class="bg-danger">
+                        <td class="fw-bold">${chore.task}</td>
+                        <td class="fw-light">${chore.notes}</td>
+                        <td class="fw-bold">${chore.complete} </td>
                         <td><button class="completeButton" data-id="${chore.id}">Complete</button>
                         <td><button class="deleteButton" data-id="${chore.id}">Delete</button>
                     </tr>
                 `)
             } else{
                 $('#listedChores').append(`
-                <tr>
-                    <td>${chore.task}</td>
-                    <td>${chore.notes}</td>
-                    <td >${chore.complete} </td>
+                <tr class="table-striped">
+                    <td class="fw-bold">${chore.task}</td>
+                    <td class="fw-light">${chore.notes}</td>
+                    <td class="fw-bold">${chore.complete} </td>
                     <td><button class="completeButton" data-id="${chore.id}">Complete</button>
                     <td><button class="deleteButton" data-id="${chore.id}">Delete</button>
                 </tr>
@@ -41,23 +43,22 @@ function renderChoreList(){
     }).catch((error) => {
         console.log('GET BROKE', error);
     }) 
-
-    $('#addChore').val('');
-    $('#addNotes').val('');
-
 }   
 
-//POSTS and Inputs are succesful
+//POSTS and Inputs 
 function addChores() {
     console.log('Hi');
     let task = $('#addChore').val();
     let notes = $('#addNotes').val();
 
+    showItsComplete(task);
+
     let newChore = {
         task,
         notes,
-        complete: 'false'
+        complete: 'no'
     }
+
     console.log(newChore);
     $.ajax({
         method: 'POST',
@@ -68,6 +69,7 @@ function addChores() {
     }).catch ((error) => {
         console.log('something went wrong in the POST', error);
     })
+    clearInputs()
 }
 
 // Build Delete Function
@@ -94,7 +96,7 @@ function updateChoreStatus(){
         method: 'PUT',
         url: `/toDo/${updateThisChore}`,
         data: {
-            complete: 'true'
+            complete: 'yes'
         }
     }).then((response) => {
         renderChoreList(); 
@@ -104,8 +106,42 @@ function updateChoreStatus(){
 
 }
 
-function showItsComplete(){
-    if( chore.complete === 'true'){
-        return  'class="addCompletedTask"';
+//create alert that shows you entered a chore. Create alert that shows
+function showItsComplete(task){
+    if ( $('#addChore').val() !== '' ) {
+        $('#submissionStatus').append(`
+        <div class="alert alert-light" role="alert" >
+            Death to Procrastination!
+            
+            <button type="button" class="closeButton" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `)
+        clearInputs();
     }
+    else if( task === '' ){
+        clearInputs();
+        $('#submissionStatus').append(`
+        <div class="alert alert-light" role="alert" >
+            Idle Hands and Whatnot... try again. 
+            
+            <button type="button" class="closeButton" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `)
+        return newChore;
+    }
+}
+
+//clear inputs after submission
+function clearInputs() {
+    $('#addChore').val('');
+    $('#addNotes').val('');
+
+}
+
+function clearAlert(){
+    $('#submissionStatus').empty();
 }

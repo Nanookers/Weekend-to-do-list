@@ -1,72 +1,31 @@
-* {
-    box-sizing: border-box;
-}
-table{
-    width: 75%;
-    background-color: rgb(162, 202, 238);
-    border-collapse: collapse;
-}
-#completeButton, #deleteButton{
-    padding: 7px;
-    width: 25%;
-    background: #c3ecf4;
-    color: rgb(69, 67, 67);
-    float: right;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-    border-radius: 0;
+body{
+    margin: 2em;
 }
 
-#submitButton {
-    padding: 7px;
-    width: 25%;
-    background: #c3ecf4;
-    color: rgb(69, 67, 67);
-    float: center;
+table{
+    margin-top: 2em;
+}
+
+.display-2{
     text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-    border-radius: 0;
+}
+.display-6{
+    text-align: center;
+}
+
+.containerInputs{
+    margin: 1px;
 }
 
 #addNotes, #addChore{
-    margin: 0;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 0;
-    width: 75%;
-    padding: 6px;
-    float: left;
-    font-size: 16px;
-    background-color: #f4d0cf;
+    width: 40.5em
 }
 
-#submitButton:hover {
-    background-color: rgb(73, 133, 139);
-    color: rgb(36, 34, 34);
+#submitButton{
+    width: 15em;
 }
 
-thead{
-    background-color: rgb(78, 109, 168);   
-}
-
-
-td, th{
-    border: 1px solid #222;
-}
-
-.completeButton, .deleteButton{
-    margin: 0;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 0;
-    width: 70%;
-    padding: 1px;
-    font-size: 12px;
-    background-color: #f4d0cf;
-}
-
-.addCompletedTask{
-    background-color: crimson;
+#submissionStatus{
+    display:inline-block;
+    
 }

@@ -61,9 +61,8 @@ router.delete('/:id', (req, res) => {
         res.sendStatus(500);
     })
 })
-//finish the put button next
-// had to include /toDO, or else it wouldn't got to address. 
-// router.put('/toDo/:id', (req, res) =>  {
+
+//router.put('/toDo/:id', (req, res) =>  {
 //     console.log(req.params);
 //     let idToUpdate = req.params.id
 //     console.log(req.body);

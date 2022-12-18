@@ -14,6 +14,7 @@ app.use(express.static('server/public'));
 // routes 
 app.use('/toDo', toDo )
 
+// was only able to get the PUT route to run through the server.
 app.put('/toDo/:id', (req, res) => {
     console.log('req params', req.params);
     console.log('req body', req.body);
